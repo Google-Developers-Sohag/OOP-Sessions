@@ -7,3 +7,9 @@
 6) `git add . `
 7) `git commit -m 'Message'`
 8) `git push --set-upstream https://github.com/Google-Developers-Sohag/OOP-Sessions.git [branch-Name]`
+
+## Code :
+- Your code should follow the guidelines of clean code.
+- Your code should follow Pascal or CamelCase naming conventions.
+- Your code should be well documented.
+- Your code should be on a new branch indicating your intended features.
