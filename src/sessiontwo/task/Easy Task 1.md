@@ -1,22 +1,35 @@
-Any GUI (graphical user interface) framework tool has a system hierarchy called `Widget`, in cases of Swing framework it was named `JComponent`, in cases of JavaFx it was named `Controller` after the fact that you have `Scenes` and `Listenables`, anyway, recall that we want to build our micro system for managing GUI datas :
+## Animals hierarchy :
 
-Any `Widget` has the following features :
-- Widget Size.
-- Widget background color.
-- Widget listener (that records user clicks).
+Your task is to build `Animal` class system. An `Animal` can categorized as a `Pet` or a `Zoo`. Either of which can have numerous type of species. 
+`Species` can be of numerous names and number.
 
-Any `Window` has the following extra features :
-- Window Title.
-- Window Bar buttons.
-- Window listeners (that records user clicks on bar buttons).
+Hint : 
 
-A window should `extends` a `Widget`.
+Animal 
+- Sound
+- Hair Color
+- Weight
+- Vaccinations
+- Food
+------
+Pet | Zoo
+------
 
+Pet
+- Price
+- Clinic Name
+- Pet Nickname
+-----
+Cat | Dog
+-----
 
-Any `Button` has the following features :
-- Button text.
-- Button listener (that records user clicks).
+Cat
+- Power of claws
+- Speed
+-----
+Bombay | Bengal | Persian
+-----
 
-A button should `extends` a `Widget`.
-
-Task : Build a `Widget` hierarchy that consists of the base class `Widget` and the children `Window` and `Button`, owing that the user would have the accessbility to set and control the widget size, color and listeners.
+Dog
+-----
+.....
