@@ -1,4 +1,4 @@
-## Any GUI (graphical user interface) framework tool has a system hierarchy called `Widget`, in cases of Swing framework it was named `JComponent`, in cases of JavaFx it was named `Controller` after the fact that you have `Scenes` and `Listenables`, anyway, recall that we want to build our micro system for managing GUI datas :
+Any GUI (graphical user interface) framework tool has a system hierarchy called `Widget`, in cases of Swing framework it was named `JComponent`, in cases of JavaFx it was named `Controller` after the fact that you have `Scenes` and `Listenables`, anyway, recall that we want to build our micro system for managing GUI datas :
 
 Any `Widget` has the following features :
 - Widget Size.
