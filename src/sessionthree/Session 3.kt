@@ -77,6 +77,11 @@ open class ConstructionSite private constructor() {
         PrivateSchool,
         LanguageSchool
     }
+    enum class University {
+        SohagUniversity,
+        MeritUniversity,
+        BritishUniversity
+    }
 
     /**
      * Companion Objets are objects that are instantiated in accompany with
@@ -87,7 +92,7 @@ open class ConstructionSite private constructor() {
     companion object {
 
         /**
-         * Constructs and licences a building.
+         * Constructs and licences a School.
          *
          * @param building a reference to a constructed and licenced building.
          */
@@ -96,6 +101,8 @@ open class ConstructionSite private constructor() {
             when (school) {
                 School.LanguageSchool -> {
                     building = LanguageSchool(name)
+                    val languages = arrayOf("Eng", "Span")
+                    building.setAvailableLanguages(languages)
                 }
                 else -> {
                     building = PublicSchool(name)
@@ -104,6 +111,27 @@ open class ConstructionSite private constructor() {
             building.setLicence(LicenceType.School, "$name ${LicenceType.School.anchorNumber}")
             return building
         }
+		/**
+         * Constructs and licences a University.
+         *
+         * @param building a reference to a constructed and licenced building.
+         */
+        fun constructUniversity(university: ConstructionSite.University): sessionthree.University {
+            val building: sessionthree.University
+            when (university) {
+                University.BritishUniversity -> {
+                    building = BritishUniversity()
+                    building.availableFaculties = arrayOf("Pharmacy", "Dentistry", "Engineering", "Economy")
+                }
+                else -> {
+                    building = SohagUniversity()
+                    building.availableFaculties = arrayOf("Medicine", "Pharmacy", "Computer Science", "Engineering")
+                }
+            }
+            building.setLicence(LicenceType.University, "${building.name} ${LicenceType.School.anchorNumber}")
+            return building
+        }
+		
     }
 }
 
@@ -129,6 +157,7 @@ abstract class EducationalBuilding(name: String) : Building(name) {
  *
  * Any School building can extend this class for extra features.
  *
+ * @author pavl_g.
  */
 abstract class School(name: String): EducationalBuilding(name) {
     /**
@@ -144,7 +173,7 @@ abstract class School(name: String): EducationalBuilding(name) {
      * @return a representative String of type of bricks.
      */
     override fun getTypeOfBricks(): String {
-        return ""
+        return "Bricky 342"
     }
 
     /**
@@ -152,7 +181,7 @@ abstract class School(name: String): EducationalBuilding(name) {
      * @return the type of concrete used in String.
      */
     override fun getTypeOfConcrete(): String {
-        return ""
+        return "Steel A1"
     }
 }
 
@@ -256,6 +285,91 @@ open class LanguageSchool(name: String): School(name) {
     }
 }
 
+/**
+ * Base class for building universities.
+ *
+ * Any University should extend this class.
+ *
+ * @author pavl_g.
+ */
+abstract class University(name: String): EducationalBuilding(name) {
+    lateinit var availableFaculties: Array<String>
+    /**
+     * Adds a postfix University to the main type.
+     * @return the main building type postfixed with University.
+     */
+    override fun getType(): String {
+        return super.getType() + " : " + "University"
+    }
+
+    /**
+     * Retrieves the type of bricks used for build University buildings.
+     * @return a representative String of type of bricks.
+     */
+    override fun getTypeOfBricks(): String {
+        return "Bricky 111"
+    }
+
+    /**
+     * Retrieves the type of concrete used for building Universities.
+     * @return the type of concrete used in String.
+     */
+    override fun getTypeOfConcrete(): String {
+        return "Metallic A2"
+    }
+}
+
+class SohagUniversity: University("Sohag University") {
+    override fun getWidth(): Double {
+        return 600.0
+    }
+
+    override fun getHeight(): Double {
+        return 500.0
+    }
+
+    override fun getLength(): Double {
+        return 500.0
+    }
+
+    override fun getNumberOfBricks(): Long {
+        return 50000
+    }
+
+    override fun getNumberOfConcrete(): Long {
+        return 100000
+    }
+
+    override fun getNumberOfCorners(): Long {
+        return 1000
+    }
+}
+
+open class BritishUniversity: University("British University") {
+    override fun getWidth(): Double {
+        return 6000.0
+    }
+
+    override fun getHeight(): Double {
+        return 5000.0
+    }
+
+    override fun getLength(): Double {
+        return 5000.0
+    }
+
+    override fun getNumberOfBricks(): Long {
+        return 500000
+    }
+
+    override fun getNumberOfConcrete(): Long {
+        return 1000000
+    }
+
+    override fun getNumberOfCorners(): Long {
+        return 10000
+    }
+}
 
 
 fun main() {
@@ -269,6 +383,37 @@ fun main() {
     println(basicSchool.getHeight())
     println(basicSchool.getWidth())
 
+    println()
+
+    // build a language school
+    val languageSchool =
+            ConstructionSite.constructSchool(ConstructionSite.School.LanguageSchool, "Public Language School")
+    println(languageSchool.name)
+    println(languageSchool.licence)
+    println(languageSchool.getHeight())
+    println(languageSchool.getWidth())
+    (languageSchool as LanguageSchool).getAvailableLanguages().forEach {
+        println(it)
+    }
+
+    println()
+
+    // build Sohag University instance
+    val sohagUniversity =
+            ConstructionSite.constructUniversity(ConstructionSite.University.SohagUniversity)
+    println(sohagUniversity.name)
+    println(sohagUniversity.licence)
+    println(sohagUniversity.getHeight())
+    println(sohagUniversity.getWidth())
+    sohagUniversity.availableFaculties.forEach {
+        println(it)
+    }
+
+    println()
+
+    // without using the ConstructionSite class as its optional and mandatory in some cases.
+    // if we want to build a school let's say with default properties then a utility that builds
+    // our objects may be our way to go
     // let's build a custom school
     val eastwoodSchool = EastwoodSchool()
     eastwoodSchool.setLicence(ConstructionSite.LicenceType.School, eastwoodSchool.getType() + " : Private Custom")
@@ -277,5 +422,5 @@ fun main() {
     println(eastwoodSchool.getHeight())
     println(eastwoodSchool.getWidth())
 
-    // if you want to add more fear
+
 }
