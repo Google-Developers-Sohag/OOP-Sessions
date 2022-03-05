@@ -14,13 +14,14 @@ Your job is to build a class hierarchy of as following :
   - proteinPercentage: Double
   - numberOfDishes: Int
   
- - And some implementation code for this `Dish` as follows : 
+- And some implementation code for this `Dish` as follows : 
   - Fish
   - Chicken
   - Steak
   - Beef
   - Pizza
   - Oriental
+  
 and, finally implement the abstract fields from the parent `Dish` class and fill the data for each dish respectively.
 
 And ofc, other delicious abstract dishes are very welcomed...!!
