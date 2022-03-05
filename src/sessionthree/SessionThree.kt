@@ -422,5 +422,108 @@ fun main() {
     println(eastwoodSchool.getHeight())
     println(eastwoodSchool.getWidth())
 
+    val daemonStarter = DaemonStarter()
+    daemonStarter.startDaemon(object : ActionInjector {
+        override fun injectAction() {
+            // add some actions to do in the middle of the daemon
+            println("{-----------I am an injected Action-----------}")
+        }
+    })
+
+}
+
+/**
+ * 2) Interfaces :
+ *
+ * An interface is an abstract class that's open for inheritance, the difference is that
+ * a class can implement multiple interfaces at the same time but cannot implement multiple
+ * abstract classes (in some languages such as C++ interfaces doesn't exist, you will manage your code
+ * using abstract class and virtual methods)
+ *
+ * Usages :
+ *
+ * 1) Same as abstract classes.
+ * 2) Injecting tasks inside internal methods (this is the most common use) also known as listeners.
+ */
+
+/**
+ * Injects an action into a function.
+ *
+ * @author pavl_g.
+ */
+interface ActionInjector {
+    fun injectAction()
+}
+
+/**
+ * Listens for the various daemon starter actions.
+ *
+ * @author pavl_g.
+ */
+interface DaemonLifeCycle {
+    fun onDaemonStarted()
+    fun onDaemonFinished()
+}
+
+/**
+ *  A daemon is a computer program that runs as a background process,
+ *  rather than being under the direct control of an interactive user.
+ *
+ *  @author pavl_g.
+ */
+class Daemon {
+    lateinit var daemonLifeCycle: DaemonLifeCycle
+    /**
+     * Starts the daemon process and injects an action into it.
+     *
+     * @param actionInjector injects a task into the daemon process.
+     */
+    fun build(actionInjector: ActionInjector) {
+        Thread {
+            println("********** Daemon started **********")
+            /* using daemon listeners */
+            daemonLifeCycle.onDaemonStarted()
+            println("********** Daemon running **********")
+
+            Thread.sleep(2000)
+            /* injecting task into daemon */
+            actionInjector.injectAction()
+            Thread.sleep(2000)
+
+            println("********** Daemon finished **********")
+            /* using daemon listeners */
+            daemonLifeCycle.onDaemonFinished()
+        }.start()
+
+    }
+}
+
+/**
+ * DaemonStarter is a class that starts a daemon thread with an action and
+ * a lifecycle.
+ *
+ * @author pavl_g.
+ */
+class DaemonStarter: DaemonLifeCycle {
+    override fun onDaemonStarted() {
+        println("{-----------Daemon started by the daemon starter-----------}")
+    }
+
+    override fun onDaemonFinished() {
+        println("{-----------Daemon terminated by the daemon starter-----------}")
+    }
+
+    /**
+     * Starts a new daemon object with an action.
+     *
+     * @param actionInjector an action to be executed on the daemon task.
+     */
+    fun startDaemon(actionInjector: ActionInjector): Daemon {
+        // let's try injecting an action into an internal class method
+        val daemon: Daemon = Daemon()
+        daemon.daemonLifeCycle = this
+        daemon.build(actionInjector)
+        return daemon
+    }
 
 }
