@@ -30,13 +30,13 @@ Each of which should be opened for further inheritance.
 
 ## Step (2) -- Optional :
 
-For proper creating of dish, you could build a utility class called `Menu` that has companion functions : 
+For proper creating of dishes, you may build a utility class called `Menu` that has companion functions : 
 
 - `orderFishDish(fishDish: FishDish, numberOfDishes: Int)` which creates a fish dish object and returns it based on the `FishDish` enum which contains various subtypes of fish dishes.
 - `orderChickenDish(chickenDish: ChickenDish, numberOfDishes: Int)`
 - `orderSteakDish(steakDish: SteakDish, numberOfDishes: Int)`
 and so on.....
 
-the beneficence of the utility class pays back when building a complex application with nested screens, for instance you could make it check for the 
-number of available dishes with the restaurant database when the user orders some food and display a not available dialog for the user or show him/her 
+the beneficence of the utility class pays back when building a complex application with nested screens, for instance you could make it checks for the 
+number of available dishes with the restaurant database when the user orders some food and displays a not available dialog for the user or shows him/her 
 some other suggestions.
